@@ -8,10 +8,14 @@
 
 .iconsContainer {
   display: flex;
-  width: 110px;
+  width: 65px;
   justify-content: space-between;
 }
 
 .statusButton {
   font-size: 12px;
+}
+
+.todoTitle {
+  cursor: pointer;
 }

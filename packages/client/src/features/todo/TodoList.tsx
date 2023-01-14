@@ -17,7 +17,7 @@ const TodoList = () => {
   return (
     <List dense={false}>
       {data.map((todo) => {
-        return <Todo key={todo._id} />;
+        return <Todo data={todo} key={todo._id} />;
       })}
     </List>
   );
