@@ -1,23 +1,25 @@
+import { useEffect } from 'react';
 import { List } from '@mui/material';
 import Todo from './Todo';
-import { useGetTodosQuery } from '../../app/api/todo';
-import Loading from '@/components/Loading/Loading';
+import { getTodos } from './api/getTodos';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { receivedTodos, getCategoriesSummary } from './todoSlice';
 
 const TodoList = () => {
-  const { data, error, isLoading, isUninitialized } = useGetTodosQuery();
-  if (isLoading || isUninitialized) {
-    return <Loading />;
-  }
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    getTodos().then((todos) => {
+      dispatch(receivedTodos(todos));
+    });
+  }, []);
 
-  if (error) {
-    // TODO: Show a nice error message
-    return null;
-  }
+  const todos = useAppSelector((state) => state.todos.items);
+  const items = useAppSelector(getCategoriesSummary);
 
   return (
-    <List dense={false}>
-      {data.map((todo) => {
-        return <Todo data={todo} key={todo._id} />;
+    <List>
+      {todos.map((todo) => {
+        return <Todo key={todo._id} data={todo} />;
       })}
     </List>
   );

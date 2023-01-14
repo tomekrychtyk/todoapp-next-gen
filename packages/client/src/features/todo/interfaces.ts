@@ -1,7 +1,10 @@
+import { ICategory } from '../category/interfaces';
+
 export interface ITodo {
   _id: string;
   title: string;
-  done: boolean;
+  status: string;
+  categories: ICategory[];
 }
 
 export interface ITodosState {
