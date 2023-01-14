@@ -13,6 +13,13 @@ const todosSlice = createSlice({
     receivedTodos(state, action: PayloadAction<ITodo[]>) {
       state.items = action.payload;
     },
+
+    add(state, action: PayloadAction<ITodo>) {
+      state.items = [
+        ...state.items,
+        { title: 'sdfdsf', _id: 'dsaf', status: 'sdf', categories: [] },
+      ];
+    },
   },
 });
 
@@ -37,5 +44,5 @@ export const getCategoriesSummary = createSelector(
   }
 );
 
-export const { receivedTodos } = todosSlice.actions;
+export const { receivedTodos, add } = todosSlice.actions;
 export default todosSlice.reducer;
