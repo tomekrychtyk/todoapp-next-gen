@@ -36,6 +36,18 @@ app.get('/todo', async (req: Request, res: Response) => {
   }
 });
 
+app.post('/todo', async (req: Request, res: Response) => {
+  console.log(req.body);
+  const todo = new Todo(req.body as typeof Todo);
+  try {
+    await todo.save();
+    res.send(JSON.stringify('success'));
+  } catch (error) {
+    console.log('Error while saving a todo', error);
+    res.status(500).send(error);
+  }
+});
+
 // app.get('/find', async (req, res) => {
 //   const todo = await Todo.findById('63c2251e40e0ea5959bf245e');
 //   console.log(todo);
@@ -71,6 +83,7 @@ app.get('/todo', async (req: Request, res: Response) => {
 //   res.send('success');
 // });
 
+const port = process.env.PORT || 8080;
 app.listen(3000, () => {
-  console.log('App is running on http://localhost:3000');
+  console.log('App is running on port:' + port);
 });

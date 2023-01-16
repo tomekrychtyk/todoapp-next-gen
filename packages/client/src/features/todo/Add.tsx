@@ -3,11 +3,13 @@ import { TextField, Button, Box, Typography } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 import { useAppDispatch } from '@/app/hooks';
 import { addTodo } from '../todo/todoSlice';
+import { useAddNewTodoMutation } from './apiSlice';
 
 const AddTodo = () => {
   const dispatch = useAppDispatch();
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [todoTitle, setTodoTitle] = useState('');
+  const [addNewTodo, response] = useAddNewTodoMutation();
 
   const toggleAdvanced = () => {
     setShowAdvanced(!showAdvanced);
@@ -28,6 +30,20 @@ const AddTodo = () => {
         categories: [],
       })
     );
+
+    addNewTodo({
+      title: todoTitle,
+      status: 'todo',
+      categories: [],
+    })
+      .unwrap()
+      .then(() => {
+        console.log('Added successfully');
+        setTodoTitle('');
+      })
+      .then((error) => {
+        console.log(error);
+      });
   };
 
   return (

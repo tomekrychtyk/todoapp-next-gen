@@ -7,6 +7,8 @@ export interface ITodo {
   categories: ICategory[];
 }
 
+export type TodoInput = Omit<ITodo, '_id'>;
+
 export interface ITodosState {
   items: ITodo[];
 }

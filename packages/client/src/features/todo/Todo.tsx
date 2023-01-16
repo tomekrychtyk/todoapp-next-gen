@@ -16,7 +16,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useAppDispatch } from '@/app/hooks';
 import { ITodo } from '../todo/interfaces';
+import { removeTodo } from './todoSlice';
 import styles from './Todo.module.css';
 
 const Todo = (props: { data: ITodo }) => {
@@ -24,6 +26,7 @@ const Todo = (props: { data: ITodo }) => {
     data: { _id, title },
   } = props;
 
+  const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [currentlyEdited, setCurrentlyEdited] = useState<null | string>(null);
   const [currentlyEditedTitle, setCurrentlyEditedTitle] = useState(title);
@@ -40,6 +43,14 @@ const Todo = (props: { data: ITodo }) => {
   const handleEditCancel = (originalTitle: string) => {
     setCurrentlyEdited(null);
     setCurrentlyEditedTitle(originalTitle);
+  };
+
+  const handleRemove = (_id: string) => {
+    dispatch(
+      removeTodo({
+        _id,
+      })
+    );
   };
 
   return (
@@ -133,7 +144,11 @@ const Todo = (props: { data: ITodo }) => {
             </Menu>
           </Box>
           <Box className={styles.iconsContainer}>
-            <IconButton edge='end' aria-label='delete'>
+            <IconButton
+              edge='end'
+              aria-label='delete'
+              onClick={() => handleRemove(_id)}
+            >
               <DeleteIcon sx={{ color: 'crimson' }} />
             </IconButton>
             <IconButton

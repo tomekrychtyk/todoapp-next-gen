@@ -20,6 +20,10 @@ const todosSlice = createSlice({
     ) {
       state.items = [...state.items, { _id, title, status, categories }];
     },
+
+    removeTodo(state, { payload: { _id } }: PayloadAction<{ _id: string }>) {
+      state.items = state.items.filter((todo) => todo._id !== _id);
+    },
   },
 });
 
@@ -44,5 +48,5 @@ export const getCategoriesSummary = createSelector(
   }
 );
 
-export const { receivedTodos, addTodo } = todosSlice.actions;
+export const { receivedTodos, addTodo, removeTodo } = todosSlice.actions;
 export default todosSlice.reducer;
