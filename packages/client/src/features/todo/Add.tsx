@@ -29,6 +29,9 @@ const AddTodo = () => {
     );
   };
 
+  const env = import.meta.env;
+  console.log('ENV', env);
+
   return (
     <>
       <Box>
