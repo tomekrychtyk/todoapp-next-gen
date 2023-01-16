@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
+import { useAddNewTodoMutation } from './apiSlice';
 import { v4 as uuid } from 'uuid';
-import { useAppDispatch } from '@/app/hooks';
-import { addTodo } from '../todo/todoSlice';
 
 const AddTodo = () => {
-  const dispatch = useAppDispatch();
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [todoTitle, setTodoTitle] = useState('');
+  const [addNewTodo, response] = useAddNewTodoMutation();
 
   const toggleAdvanced = () => {
     setShowAdvanced(!showAdvanced);
@@ -20,14 +19,17 @@ const AddTodo = () => {
   };
 
   const handleAdd = () => {
-    dispatch(
-      addTodo({
-        title: todoTitle,
-        _id: uuid(),
-        status: 'todo',
-        categories: [],
-      })
-    );
+    addNewTodo({
+      _id: uuid(),
+      title: todoTitle,
+      status: 'todo',
+      categories: [],
+    })
+      .unwrap()
+      .then(() => {})
+      .then((error) => {
+        console.log(error);
+      });
   };
 
   return (

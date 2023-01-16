@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 import { Todo } from './src/model/todo/Todo';
 
 dotenv.config();
@@ -9,6 +10,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
+// app.use(bodyParser());
 
 const dbUser = process.env.MONGO_USER;
 const dbPassword = process.env.MONGO_PASSWORD;
@@ -34,6 +36,12 @@ app.get('/todo', async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).send(error);
   }
+});
+
+app.post('/todo', async (req: Request, res: Response) => {
+  console.log(req.body);
+
+  res.send('done');
 });
 
 // app.get('/find', async (req, res) => {

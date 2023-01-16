@@ -1,20 +1,23 @@
-import { useEffect } from 'react';
 import { List } from '@mui/material';
 import Todo from './Todo';
-import { getTodos } from './api/getTodos';
-import { useAppDispatch, useAppSelector } from '@/app/hooks';
-import { receivedTodos, getCategoriesSummary } from './todoSlice';
+import { useGetTodosQuery } from './apiSlice';
+import Loading from '@/components/Loading/Loading';
 
 const TodoList = () => {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    getTodos().then((todos) => {
-      dispatch(receivedTodos(todos));
-    });
-  }, []);
+  const {
+    data: todos,
+    isLoading,
+    isUninitialized,
+    isError,
+  } = useGetTodosQuery();
 
-  const todos = useAppSelector((state) => state.todos.items);
-  const items = useAppSelector(getCategoriesSummary);
+  if (isLoading || isUninitialized) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return null;
+  }
 
   return (
     <List>
