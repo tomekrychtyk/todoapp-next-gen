@@ -1,10 +1,4 @@
-import {
-  createTheme,
-  ThemeProvider,
-  Grid,
-  TextField,
-  Button,
-} from '@mui/material';
+import { createTheme, ThemeProvider, Grid } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import TodoList from './features/todo/TodoList';
 import ProjectList from './features/project/ProjectList';

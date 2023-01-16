@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
+import { v4 as uuid } from 'uuid';
 import { useAppDispatch } from '@/app/hooks';
-import { add } from '../todo/todoSlice';
+import { addTodo } from '../todo/todoSlice';
 
 const AddTodo = () => {
   const dispatch = useAppDispatch();
@@ -20,17 +21,14 @@ const AddTodo = () => {
 
   const handleAdd = () => {
     dispatch(
-      add({
+      addTodo({
         title: todoTitle,
-        _id: 'random-id-hardcoded',
-        status: 'Done (hardcoded)',
+        _id: uuid(),
+        status: 'todo',
         categories: [],
       })
     );
   };
-
-  const env = import.meta.env;
-  console.log('ENV', env);
 
   return (
     <>
